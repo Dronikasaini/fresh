@@ -34,7 +34,17 @@ const [showAll, setShowAll] = useState(false);
 
       {/* Cards */}
 <div className="flex flex-wrap gap-6 mt-[30px] px-4 sm:px-16 justify-center">
-
+<div
+  className={`
+    grid grid-cols-2 gap-4 px-4
+    sm:flex
+    ${
+      showAll
+        ? "sm:flex-wrap sm:px-16 sm:gap-7 sm:ml-5"
+        : "sm:flex-nowrap sm:px-16 sm:gap-6 sm:justify-between"
+    }
+  `}
+>
 {products
   .slice(0, showAll ? 18 : 6)
   .map((item) => (             <div
@@ -72,7 +82,7 @@ const [showAll, setShowAll] = useState(false);
             </div>
           </div>
         ))}
-
+</div>
       </div>
     </>
   );

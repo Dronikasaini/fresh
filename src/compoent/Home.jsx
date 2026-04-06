@@ -7,10 +7,14 @@ import Product3 from "./Product3";
 import Product4 from "./Product4";
 import Product5 from "./Product5"; 
 import Product6 from "./product6" ;
+import Signup from "./Signup";
+import Login from "./Login";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 function Home() {
     const navigate = useNavigate();
+
+const [showSignup, setShowSignup] = useState(true);
 
   return (
     <div className="w-full overflow-hidden">
@@ -27,7 +31,7 @@ function Home() {
       </div>
 
       {/* 🔹 Cards Row */}
-       <div className="flex justify-center mt-10 mx-6">
+       <div className="hidden md:flex justify-center mt-10 mx-6">
   <div className="w-full max-w-[1200px] flex justify-between">
 
     {[...Array(7)].map((_, index) => (
@@ -56,7 +60,7 @@ function Home() {
 
 
 
-    <div className="flex justify-center mt-10 mx-6">
+    <div className=" hidden md:flex justify-center mt-10 mx-6">
   <div className="w-full max-w-[1200px]  flex justify-between">
 
     {[...Array(7)].map((_, index) => (
@@ -88,6 +92,10 @@ function Home() {
     <Product4/>
     <Product5/>
     <Product6/>
+          {showSignup && <Signup setShowSignup={setShowSignup} />}
+
+
+  
     </div>
   
 

@@ -7,6 +7,11 @@ import Detail from "./compoent/Detail";
 import Cart from "./compoent/Cart";
 import Recommdation from "./compoent/Recommdation";
 import User from "./compoent/User";
+import Order from "./compoent/Order";
+import Status from "./compoent/Status";
+import Liked from "./compoent/Liked";
+import Login from "./compoent/Login";
+import Signup from "./compoent/Signup";
 function App() {
 
 
@@ -37,7 +42,32 @@ function App() {
     },{
       path:"/User",
       element:<User />
-    }
+    },{
+      path:"/Order",
+      element:<Order />
+    },{
+      path:"/Status",
+      element:<Status />
+    },{
+      path:"/Liked",
+      element:<Liked/>,
+    },{
+  path: "/Login",
+  element: (
+    <>
+      <Home />
+      <Login />
+    </>
+  )
+},,{
+  path: "/Signup",
+  element: (
+    <>
+      <Home />
+      <Signup />
+    </>
+  )
+}
       ]
     }
   ]);

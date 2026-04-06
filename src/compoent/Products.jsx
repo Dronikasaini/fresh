@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import onetaka from "../compoent/onetaka.png";
 import { useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 export default function Products() {
+ const { handleLike, likeItems } = useOutletContext();
   const Navigate = useNavigate();
   const products = Array.from({ length: 24 }, (_, index) => ({
     id: index + 1,
@@ -33,33 +35,50 @@ export default function Products() {
       {/* Cards */}
       <div className="w-full max-w-[1352px] mx-auto mt-[30px]">
         <div
-          className={`flex   ${
-            showAll ? "flex-wrap px-4 sm:px-16  gap-7 ml-5" : "flex-nowrap  px-4 sm:px-16  gap-6  justify-between"
-          }`}
+  className={`
+    grid grid-cols-2 gap-4 px-4
+    sm:flex
+    ${
+      showAll
+        ? "sm:flex-wrap sm:px-16 sm:gap-7 sm:ml-5"
+        : "sm:flex-nowrap sm:px-16 sm:gap-6 sm:justify-between"
+    }
+  `}
+>
+         {products.slice(0, showAll ? 24 : 6).map((item) => {
+
+  const liked = likeItems.find((p) => p.id === item.id);
+
+  return (
+    <div
+      key={item.id}
+      className="w-[175px] h-[228px] rounded-[8px] p-[12px] bg-[#F7F7F6]"
+    >
+
+      <div className="flex gap-4 pl-8">
+        <img
+          src={item.image}
+          alt="product"
+          className="w-[90px] h-[113px] object-cover"
+        />
+
+        <svg
+          onClick={() => handleLike(item)}
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          className="cursor-pointer"
         >
-          {products.slice(0, showAll ? 24 : 6).map((item) => (
-            <div
-              key={item.id}
-              className="w-[175px] h-[228px] rounded-[8px] p-[12px] bg-[#F7F7F6]"
-            >
-              {/* <div className="flex justify-center">
-                <img
-                  src={item.image}
-                  alt="product"
-                  className="w-[90px] h-[113px] object-cover"
-                />
-              </div> */}
-              <div className="flex gap-4  pl-8">
-              <img
-                src={item.image}
-                alt="product"
-                className="w-[90px] h-[113px] object-cover"
-              />
-              {/* <FaHeart className="text-gray-400 text-[18px]" /> */}
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.5 6.875C17.5 4.80417 15.7508 3.125 13.5933 3.125C11.9808 3.125 10.5958 4.06333 10 5.4025C9.40417 4.06333 8.01917 3.125 6.40583 3.125C4.25 3.125 2.5 4.80417 2.5 6.875C2.5 12.8917 10 16.875 10 16.875C10 16.875 17.5 12.8917 17.5 6.875Z" stroke="#E49D9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-</div>
+          <path
+            d="M17.5 6.875C17.5 4.80417 15.7508 3.125 13.5933 3.125C11.9808 3.125 10.5958 4.06333 10 5.4025C9.40417 4.06333 8.01917 3.125 6.40583 3.125C4.25 3.125 2.5 4.80417 2.5 6.875C2.5 12.8917 10 16.875 10 16.875C10 16.875 17.5 12.8917 17.5 6.875Z"
+            stroke="#E49D9C"
+            strokeWidth="1.5"
+            fill={liked ? "#E49D9C" : "none"}
+          />
+        </svg>
+      </div>
+
+
 
               <div className="mt-2 flex flex-col gap-[4px]">
                 <h3 className="text-[16px] font-semibold">
@@ -75,8 +94,9 @@ export default function Products() {
                   Add
                 </button>
               </div>
-            </div>
-          ))}
+            </div>       
+          );
+        })}
         </div>
       </div>
     </>

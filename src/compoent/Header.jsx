@@ -1,29 +1,37 @@
+
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Location from "../compoent/Location";
 import { useNavigate } from "react-router-dom";
 
 export default function Header({ openCart, setOpenCart, cartItems }) {
-    console.log("Header cartItems:", cartItems);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
 
   return (
-    // <div className="w-full max-h-[1531px] h-[80px] overflow-hidden">
-    <div className="w-full max-w-[1531px] h-[60px] relative">
-
-      <div className="w-full max-w-[1351px] h-[56px] mt-[12px] mx-auto px-8 flex justify-between items-center">
+    // <div className="w-full max-w-[1531px]  h-[60px] relative">
+    <div className="w-full overflow-x-hidden">
+      <div className="w-full max-w-[1351px]  h-[56px] mt-[12px] mx-auto px-4 md:px-8 flex justify-between items-center">
 
         {/* LEFT SECTION */}
-        <div className="flex items-center gap-[45px] ">
-
+        <div className="flex items-center  gap-[3px] md:gap-[45px] w-full md:w-auto justify-between">
+{/* <div className="flex items-center gap-3 md:gap-8 w-full justify-between"> */}
           {/* Logo */}
-          <h3 className="abc font-bold text-[40px] leading-[56px] tracking-[0%] text-[#76BA1F]">
+          <h3 className="abc font-bold text-[24px] md:text-[36px] leading-[56px] text-[#76BA1F]">
             Nova Fresh
           </h3>
 
-          {/* Search Bar */}
-          <div className="w-[548px] h-[42px] flex items-center 
+          {/* Hamburger (Mobile only) */}
+          <div
+            className="md:hidden text-[26px] cursor-pointer ml-auto "
+            onClick={() => setOpenMenu(true)}
+          >
+            ☰
+          </div>
+
+          {/* Search Bar (Desktop only) */}
+          <div className="hidden md:flex w-[548px] h-[42px] items-center 
                           bg-white border border-[#BCC2BC] 
                           rounded-[8px] gap-[4px] p-[8px] mb-3">
 
@@ -32,21 +40,33 @@ export default function Header({ openCart, setOpenCart, cartItems }) {
             <input
               type="text"
               placeholder="Search for 'ghee'"
-              className="w-full h-full outline-none text-[14px] font-normal"
+              className="w-full h-full outline-none text-[14px]"
             />
           </div>
-
         </div>
 
+        {/* RIGHT SECTION (Desktop only) */}
+        <div className="hidden md:flex items-center gap-[40px]">
 
-        {/* RIGHT SECTION */}
-        <div className="flex items-center gap-[40px]   ">
-
-          {/* Location Dropdown */}
+          {/* Location */}
           <Location />
-     
-{/* Cart Icon */}
-<svg
+
+          {/* CART ICON */}
+          {/* <svg
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            className="cursor-pointer"
+            onClick={() => {
+              setOpenCart(!openCart);
+              setOpenProfile(false);
+            }}
+          >
+            <path fillRule="evenodd" clipRule="evenodd"
+              d="M9.25033 18.8333C9.58185 18.8333 9.89979 18.965 10.1342 19.1994C10.3686 19.4339 10.5003 19.7518 10.5003 20.0833C10.5003 20.4148 10.3686 20.7328 10.1342 20.9672C9.89979 21.2016 9.58185 21.3333 9.25033 21.3333Z"
+              fill="#404440" />
+          </svg> */}
+          <svg
   width="26"
   height="26"
   viewBox="0 0 26 26"
@@ -63,59 +83,20 @@ export default function Header({ openCart, setOpenCart, cartItems }) {
     fill="#404440" />
 </svg>
 
-{/* Cart Box */}
-
-   
-
- 
-{openCart && (
-<div className="fixed right-0 top-[80px] w-[337px] h-[500px] bg-white shadow-xl border-l flex flex-col items-center z-50">
-
-{/* Title */}
-<div className="w-[257px] flex justify-between items-center mt-4">
-<h2 className="font-semibold">Your Cart</h2>
-<button onClick={() => setOpenCart(false)}>✕</button>
-</div>
-
-{/* Scrollable Items */}
-<div className="w-[257px] flex-1 overflow-y-auto flex flex-col gap-[16px] mt-4 pr-1">
-
-{cartItems.map((item, index) => (
-<div
-key={index}
-className="flex gap-[12px] p-[12px] rounded-[8px] bg-[#F7F7F7]"
->
-
-<img
-src={item.image}
-alt={item.name}
-className="w-[60px] h-[60px]"
-/>
-
-<div className="flex flex-col">
-<p className="font-semibold">{item.name}</p>
-<p className="text-[12px] text-[#5D5656]">{item.weight}</p>
-<p className="font-semibold">Rs {item.price}</p>
-</div>
-
-</div>
-))}
-
-</div>
-
-{/* Fixed Button */}
-<button className="w-[257px] h-[40px] bg-[#76BA1F] text-white rounded-[4px] mb-4" onClick={() => navigate("/Cart")}>
-Buy Now
-</button>
-
-</div>
-)}
-         
-
-      
-
-          {/* Profile Image */}
-       <svg
+          {/* PROFILE ICON */}
+          {/* <svg
+            width="42"
+            height="26"
+            className="cursor-pointer"
+            onClick={() => {
+              setOpenProfile(!openProfile);
+              setOpenCart(false);
+            }}
+          >
+            <circle cx="13" cy="9" r="4" stroke="black" />
+            <path d="M5 22c2-5 14-5 16 0" stroke="black" />
+          </svg> */}
+           <svg
   width="42"
   height="26"
   style={{
@@ -143,28 +124,87 @@ onClick={() => {
   />
 </svg>
 
-
-
         </div>
-
       </div>
 
-    
+      {/* ✅ CART DROPDOWN (Desktop only - SAME AS YOUR OLD CODE) */}
+      {openCart && (
+        <div className="hidden md:flex fixed right-0 top-[80px] w-[337px] h-[500px] bg-white shadow-xl border-l flex-col items-center z-50">
 
-      {/* Profile Dropdown */}
+          {/* Title */}
+          <div className="w-[257px] flex justify-between items-center mt-4">
+            <h2 className="font-semibold">Your Cart</h2>
+            <button onClick={() => setOpenCart(false)}>✕</button>
+          </div>
+
+          {/* Items */}
+          <div className="w-[257px] flex-1 overflow-y-auto flex flex-col gap-[16px] mt-4 pr-1">
+
+            {cartItems.map((item, index) => (
+              <div key={index} className="flex gap-[12px] p-[12px] rounded-[8px] bg-[#F7F7F7]">
+
+                <img src={item.image} alt={item.name} className="w-[60px] h-[60px]" />
+
+                <div className="flex flex-col">
+                  <p className="font-semibold">{item.name}</p>
+                  <p className="text-[12px] text-[#5D5656]">{item.weight}</p>
+                  <p className="font-semibold">Rs {item.price}</p>
+                </div>
+
+              </div>
+            ))}
+
+          </div>
+
+          {/* Button */}
+          <button
+            className="w-[257px] h-[40px] bg-[#76BA1F] text-white rounded-[4px] mb-4"
+            onClick={() => navigate("/Cart")}
+          >
+            Buy Now
+          </button>
+
+        </div>
+      )}
+
+      {/* MOBILE SIDEBAR */}
+      {openMenu && (
+        <div className="fixed inset-0 z-50 flex">
+          <div className="w-full bg-black/40" onClick={() => setOpenMenu(false)}></div>
+
+          <div className="w-[260px] bg-white h-full p-4 shadow-lg">
+            <div className="flex justify-between mb-4">
+              <h2 className="text-lg font-semibold">Menu</h2>
+              <button onClick={() => setOpenMenu(false)}>✕</button>
+            </div>
+
+            <ul className="flex flex-col gap-4 text-[15px]">
+              <li onClick={() => navigate("/Account")} className="cursor-pointer">Your Account</li>
+              <li onClick={() => navigate("/Order")} className="cursor-pointer">Your Orders</li>
+              <li onClick={() => navigate("/Liked")} className="cursor-pointer">Wishlist</li>
+              <li onClick={() => navigate("/Cart")} className="cursor-pointer">Cart</li>
+              <li className="text-red-500 cursor-pointer">Logout</li>
+            </ul>
+          </div>
+        </div>
+      )}
+
+      {/* PROFILE DROPDOWN */}
       {openProfile && (
         <div className="absolute right-4 top-[90px] w-[220px] bg-white border rounded-lg shadow-lg">
           <ul className="text-[14px]">
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"onClick={() => navigate("/Account")}>Your Account</li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Cart")}>Your Orders</li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"onClick={() => navigate("/Account")}>Your Wish List</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Account")}>Your Account</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Order")}>Your Orders</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Liked")}>Your Wish List</li>
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Recommdation")}>Your Recommendation</li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Switch Account</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Cart")}>Your Cart</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/Signup")}>Switch Account</li>
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">Log Out</li>
           </ul>
         </div>
       )}
-
+  
     </div>
-  );
-}
+    
+   );
+} 
