@@ -1,14 +1,28 @@
 import React from "react";
 import picture from"./picture.png";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Profile() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+  axios.get("http://localhost:5000/users")
+    .then((res) => {
+      console.log(res.data); // check karne ke liye
+      setUsers(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, []);
+const user = users[0];
   return (
     <div className="w-full flex justify-center py-10">
       <div className="w-[900px] bg-white p-8 ">
 
         {/* Header */}
-        <div className="flex justify-between items-center mb-6" onClick={() => navigate("/Home")}>
+        <div className="flex justify-between items-center mb-6" >
           <h2 className=" flex text-lg items-center gap-2  font-semibold">
              <svg width="8" height="11" viewBox="0 0 8 14"  className="  text-lg font-semibold"fill="none">
               <path
@@ -19,7 +33,7 @@ export default function Profile() {
               />
             </svg>Your Account</h2>
 
-          <button className="bg-blue-500 text-white px-4 py-1 rounded" onClick={()=>{navigate("/User")}}>
+          <button className="bg-blue-500 text-white px-4 py-1 rounded" onClick={() => navigate("/User", { state: user })}>
             Edit
           </button>
         </div>
@@ -39,24 +53,32 @@ export default function Profile() {
           <input
             type="text"
             placeholder="First Name"
+              value={user?.firstName || "" } readOnly
+
             className="border p-2 rounded w-full"
           />
 
           <input
             type="text"
             placeholder="Last Name"
+              value={user?.lastName || ""} readOnly
+
             className="border p-2 rounded w-full"
           />
 
           <input
             type="email"
             placeholder="Email"
+              value={user?.email || ""} readOnly
+
             className="border p-2 rounded w-full"
           />
 
           <input
             type="text"
-            placeholder="Phone No"
+            placeholder="contact"
+              value={user?.contact || ""} readOnly
+
             className="border p-2 rounded w-full"
           />
 

@@ -36,7 +36,10 @@ export default function Signup({ setShowSignup }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: formData.firstName + " " + formData.lastName,
+          // name: formData.firstName + " " + formData.lastName,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          contact: formData.contact,
           email: formData.email,
           password: formData.password
         })

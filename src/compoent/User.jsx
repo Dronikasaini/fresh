@@ -1,7 +1,10 @@
 import React from "react";
 import picture from"./picture.png";
+import { useLocation } from "react-router-dom";
+
 
 function User() {
+  
   return (
     <div className="w-full flex justify-center bg-[#FCFCFB] py-10">
 
